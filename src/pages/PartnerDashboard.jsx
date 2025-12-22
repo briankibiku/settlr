@@ -1,103 +1,11 @@
-// import { useState, useEffect } from 'react';
-// import Sidebar from '../components/layout/Sidebar';
-// import api from '../services/api';
-// import { useAuth } from '../context/AuthContext';
 
-// const Dashboard = () => {
-//   const [dashboardData, setDashboardData] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState('');
-//   const { user } = useAuth();
-  
-//   useEffect(() => {
-//     fetchDashboardData();
-//   }, []);
-  
-//   const fetchDashboardData = async () => {
-//     try {
-//       setLoading(true);
-//       // This endpoint should be protected on your backend
-//         // const response = await api.get('/dashboard/stats');
-//       setDashboardData({
-//         totalUsers: 1500000,
-//         activeSessions: 1500000,
-//         apiCalls: 3000000,
-//       });
-//     //   setDashboardData(response.data);
-//       setError('');
-//     } catch (err) {
-//       setError(err.response?.data?.message || 'Failed to load dashboard data');
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-  
-//   return (
-//     <div className="flex h-screen bg-gray-100">
-//       <Sidebar />
-      
-//       <div className="flex-1 overflow-auto">
-//         <div className="p-8">
-//           <h1 className="text-3xl font-bold mb-6">Welcome, {user?.name}!</h1>
-          
-//           {loading && (
-//             <div className="text-center py-8">
-//               <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-//               <p className="mt-2 text-gray-600">Loading dashboard...</p>
-//             </div>
-//           )}
-          
-//           {error && (
-//             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-//               {error}
-//               <button 
-//                 onClick={fetchDashboardData}
-//                 className="ml-4 text-sm underline"
-//               >
-//                 Retry
-//               </button>
-//             </div>
-//           )}
-          
-//           {!loading && !error && dashboardData && (
-//             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-//               <div className="bg-white p-6 rounded-lg shadow">
-//                 <h3 className="text-gray-500 text-sm font-semibold mb-2">Total Holding Account</h3>
-//                 <p className="text-3xl font-bold">{Number(dashboardData.totalUsers).toLocaleString()}</p>
-//               </div>
-              
-//               <div className="bg-white p-6 rounded-lg shadow">
-//                 <h3 className="text-gray-500 text-sm font-semibold mb-2">Ledger Balance</h3>
-//                 <p className="text-3xl font-bold">{Number(dashboardData.activeSessions).toLocaleString()}</p>
-//               </div>
-              
-//               <div className="bg-white p-6 rounded-lg shadow">
-//                 <h3 className="text-gray-500 text-sm font-semibold mb-2">Total Balance</h3>
-//                 <p className="text-3xl font-bold">{Number(dashboardData.apiCalls).toLocaleString()}</p>
-//               </div>
-//             </div>
-//           )}
-          
-//           <div className="mt-8 bg-white p-6 rounded-lg shadow">
-//             <h2 className="text-xl font-bold mb-4">Recent Activity</h2>
-//             <p className="text-gray-600">
-//               This is where you would display recent user activity, charts, or other relevant information.
-//             </p>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
 
 import { useState, useEffect } from 'react';
 import Sidebar from '../components/layout/Sidebar';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
-const Dashboard = () => {
+const PartnerDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -138,7 +46,7 @@ const Dashboard = () => {
         <main className="flex-1 overflow-y-auto">
           <div className="p-4 sm:p-6 lg:p-8 pt-20 lg:pt-8">
             <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">
-              Welcome, {user?.name || user?.email}! 👋
+              Welcome, Partner! 👋
             </h1>
             
             {loading && (
@@ -226,4 +134,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default PartnerDashboard;

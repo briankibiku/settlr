@@ -4,17 +4,55 @@ import { setTokens, clearTokens, getAccessToken, getUserFromToken } from '../uti
 // Login user
 export const login = async (emailAddress, password) => {
   try {
-    const response = await api.put('/auth/login', { emailAddress, password });
-    // const { accessToken, refreshToken } = response.data;
-    const { phoneNumber, message } = response.data;
-    
-    // Store tokens
-    // setTokens(accessToken, refreshToken);
+    const response = await api.put('/auth/login', { emailAddress, password }); 
+    const { message } = response.data; 
     
     // Return user data
-    return getUserFromToken(message);
+    return { message };
   } catch (error) {
     throw error.response?.data?.message || 'Login failed';
+  }
+};
+// Partner login
+export const partnerLogin = async (clientId, apiKey) => {
+  try {
+    const response = await api.post('/patner/login', { clientId, apiKey });
+    const { accessToken, refreshToken } = response.data;
+    
+    // Return user data
+    return  { accessToken, refreshToken };
+  } catch (error) {
+    throw error.response?.data?.message || 'Partner login failed';
+  }
+};
+// Partner signup
+export const partnerSignup = async (
+  companyName,
+  businessIdNumber,
+  email,
+  certificateOfIncorporationNumber,
+  licenseNumber,
+  country,
+  address,
+  role
+) => {
+  try {
+    const response = await api.post('/patner/create', {
+      companyName,
+      businessIdNumber,
+      email,
+      certificateOfIncorporationNumber,
+      licenseNumber,
+      country,
+      address,
+      role
+    });
+    const { partnerId, clientId, apiKey } = response.data;
+    
+    // Return user data
+    return { partnerId, clientId, apiKey };
+  } catch (error) {
+    throw error.response?.data?.message || 'Partner signup failed';
   }
 };
 
@@ -22,14 +60,14 @@ export const login = async (emailAddress, password) => {
 // Verify code 
 export const verify = async (phoneOrEmail, otp) => {
   try {
-    const response = await api.post('/auth/validate', { phoneOrEmail, otp });
-    const { accessToken, refreshToken } = response.data;
+    const response = await api.put('/auth/validate', { phoneOrEmail, otp });
+    const { message, token } = response.data;
     
     // Store tokens
-    // setTokens(accessToken, refreshToken);
+    setTokens(token);
     
     // Return user data
-    return getUserFromToken('validated');
+    return { message, token };
   } catch (error) {
     throw error.response?.data?.message || 'Login failed';
   }
@@ -59,14 +97,13 @@ export const signup = async (
   phoneNumber,
   email,
   password,
-  confirmPassword, verified, status,});
-    // const { accessToken, refreshToken } = response.data;
+      confirmPassword, verified, status,
+    });
     
-    // Store tokens
-    // setTokens(accessToken, refreshToken);
+    const { message } = response.data; 
     
     // Return user data
-    return getUserFromToken('accessToken');
+    return { message };
   } catch (error) {
     throw error.response?.data?.message || 'Signup failed';
   }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { verify } from '../services/auth';
 import { useAuth } from '../context/AuthContext';
@@ -7,9 +7,40 @@ const Verify = () => {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(''); 
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   
   const navigate = useNavigate();
   const { login: setAuthUser } = useAuth();
+
+
+   
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const messageParam = params.get('message'); 
+    const contacts = extractPhoneAndEmail(messageParam);
+    const { phone, email } = contacts || {};
+    setPhone(phone);
+    setEmail(email);
+
+    if (messageParam) {
+      setMessage(messageParam); 
+    }
+  }, []);
+  
+
+  const extractPhoneAndEmail = (sentence) => {
+    const regex = /(\d{12}) and (\S+@\S+\.\S+)/;
+    const matches = sentence.match(regex);
+    if (matches) {
+      return {
+        phone: matches[1],
+        email: matches[2]
+      };
+    }
+    return null;
+    };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,13 +49,12 @@ const Verify = () => {
     
     try {
       // Call login service
-      const userData = await verify(phoneOrEmail, otp);
+      const userData = await verify(email, otp);
       
-      // Update auth context
-      setAuthUser(userData);
-      
-      // Redirect to dashboard
-      navigate('/dashboard');
+      const { message } = userData;
+      if (message == 'Registration successful') { 
+        navigate(`/dashboard?message=${message}`);
+      }
     } catch (err) {
       setError(err);
     } finally {
@@ -46,7 +76,7 @@ const Verify = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Enter OTP sent to your email
+              {message} 
             </label>
             <input
               type="number"
@@ -62,7 +92,7 @@ const Verify = () => {
             disabled={loading}
             className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 disabled:bg-blue-300"
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? 'Verifying in...' : 'Verify'}
           </button>
         </form> 
       </div>
