@@ -4,10 +4,13 @@ import { useState, useEffect } from 'react';
 import Sidebar from '../components/layout/Sidebar';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { getTransfiBalance } from '../services/partners';
 
 const PartnerDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [totalCollectionsAmount, setTotalCollectionsAmount] = useState(0);
+  const [currency, setCurrency] = useState('USD');
   const [error, setError] = useState('');
   const { user } = useAuth();
   
@@ -18,17 +21,27 @@ const PartnerDashboard = () => {
   
    
   const fetchDashboardData = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      // This endpoint should be protected on your backend
-        // const response = await api.get('/dashboard/stats');
+      const response = await getTransfiBalance(currency); 
+      const {
+        totalCollectionsAmount,
+        totalPayoutAmount,
+        totalSettledAmount,
+        totalUnsettledAmount,
+        totalAvailablePrefundingBalance,
+        totalPayoutFee,
+        totalPayoutInTransitBalance,
+        date
+      } = response; 
+      setTotalCollectionsAmount(totalPayoutInTransitBalance);
       setDashboardData({
-        totalBalance: 3000000,
-        ledgerBalance: 1500000,
-        accountBalance: 1500000,
-      });
-    //   setDashboardData(response.data);
-      setError('');
+        transfiBalance: totalPayoutAmount,
+        totalBalance: totalCollectionsAmount,
+        ledgerBalance: totalAvailablePrefundingBalance,
+        accountBalance: totalSettledAmount,
+      }); 
+      
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to load dashboard data');
     } finally {
@@ -74,7 +87,7 @@ const PartnerDashboard = () => {
             )}
             
             {!loading && !error && dashboardData && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                 
                 
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
@@ -85,13 +98,13 @@ const PartnerDashboard = () => {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-gray-500 text-sm font-semibold mb-1">Account Balance </h3>
-                      <p className="text-3xl font-bold text-gray-800">{Number(dashboardData.accountBalance).toLocaleString()}</p>
+                      <h3 className="text-gray-500 text-sm font-semibold mb-1">Transfi Balance </h3>
+                      <p className="text-3xl font-bold text-gray-800">{Number(dashboardData.transfiBalance).toLocaleString()}</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow sm:col-span-2 lg:col-span-1">
+                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow sm:col-span-2 lg:col-span-1">
                   <div className="flex items-center gap-4">
                     <div className="p-3 bg-purple-50 rounded-lg">
                       <svg className="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,6 +117,20 @@ const PartnerDashboard = () => {
                     </div>
                   </div>
                 </div>
+                
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-blue-50 rounded-lg">
+                      <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-gray-500 text-sm font-semibold mb-1">Total Balance</h3>
+                      <p className="text-3xl font-bold text-gray-800">{Number(dashboardData.totalBalance).toLocaleString()}</p>
+                    </div>
+                  </div>
+                </div> 
                 
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                   <div className="flex items-center gap-4">

@@ -32,11 +32,14 @@ const processQueue = (error, token = null) => {
 // Runs before every request is sent
 api.interceptors.request.use(
   (config) => {
+    // If request doesn't require authentication, skip adding token
+    if (config?.skipAuth) return config;
+    
     const token = getAccessToken();
     
     // Add token to Authorization header if it exists
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `bearer ${token}`;
     }
     
     return config;
@@ -45,6 +48,22 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+// api.interceptors.request.use(
+//   (config) => {
+//     const token = getAccessToken();
+    
+//     // Add token to Authorization header if it exists
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
+    
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
 
 // RESPONSE INTERCEPTOR
 // Runs after every response is received
