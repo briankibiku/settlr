@@ -126,7 +126,7 @@ const PartnerDashboard = () => {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-gray-500 text-sm font-semibold mb-1">Total Balance</h3>
+                      <h3 className="text-gray-500 text-sm font-semibold mb-1">Total Payout Amount</h3>
                       <p className="text-3xl font-bold text-gray-800">{Number(dashboardData.totalBalance).toLocaleString()}</p>
                     </div>
                   </div>

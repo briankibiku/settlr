@@ -22,13 +22,13 @@ const Landing = () => {
             {/* Navigation Buttons */}
             <div className="flex items-center gap-4">
               <Link
-                to="/partner-login"
+                to="/login"
                 className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
               >
                 Login
               </Link>
               <Link
-                to="/partner-signup"
+                to="/signup"
                 className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg"
               >
                 Get Started
@@ -73,12 +73,12 @@ const Landing = () => {
                   </svg>
                 </Link>
 
-                <Link to="/partner-signup">
+                <Link to="/partner-login">
                   <button className="inline-flex items-center justify-center gap-2 bg-white border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  <span>Become a Partner</span>
+                  <span>Login as Partner</span>
                   </button>
                 </Link>
               </div>
