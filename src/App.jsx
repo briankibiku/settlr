@@ -22,20 +22,28 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/verify" element={<Verify />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/api-keys" element={<ApiKeys />} />
+          {/* <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/api-keys" element={<ApiKeys />} /> */}
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/users" element={<Users />} />
           <Route path="/partner-login" element={<ApiPartnerLogin />} />
           <Route path="/partner-signup" element={<PartnerSignup />} />
-          <Route path="/partner-dashboard" element={<PartnerDashboard />} />
+          {/* <Route path="/partner-dashboard" element={<PartnerDashboard />} /> */}
           
           {/* Protected Routes - Require authentication */}
-          {/* <Route
+          <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/partner-dashboard"
+            element={
+              <ProtectedRoute>
+                <PartnerDashboard />
               </ProtectedRoute>
             }
           />
@@ -46,7 +54,7 @@ function App() {
                 <ApiKeys />
               </ProtectedRoute>
             }
-          /> */}
+          />
           
           {/* Default Route - Redirect to dashboard */}
           <Route path="/" element={<Landing />} />
