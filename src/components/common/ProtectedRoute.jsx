@@ -5,6 +5,12 @@ const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
   
   const getAccessToken = () => localStorage.getItem("accessToken"); 
+
+  useEffect(() => {
+    if (!getAccessToken() || getAccessToken() === "") {
+      navigate("/", { replace: true });
+    }
+  }, [accessToken]);
   
   // Show nothing while checking authentication
   if (loading) {
