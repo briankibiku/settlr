@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 
 const Landing = () => {
+  function getCurrentYear() {
+    return new Date().getFullYear();
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -327,7 +331,8 @@ const Landing = () => {
           </div>
 
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
-            <p>&copy; 2024 Remit. All rights reserved.</p>
+            
+            <p>&copy; {getCurrentYear()} Remit. All rights reserved.</p>
           </div>
         </div>
       </footer>
