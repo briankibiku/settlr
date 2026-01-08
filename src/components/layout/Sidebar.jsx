@@ -73,6 +73,12 @@ const [settingsOpen, setSettingsOpen] = useState(false);
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    logout();
+    navigate('/');
+  };
   
   const toggleMobileSidebar = () => {
     setIsMobileOpen(!isMobileOpen);
@@ -124,18 +130,26 @@ const [settingsOpen, setSettingsOpen] = useState(false);
           fixed lg:static inset-y-0 left-0 z-40
           bg-white shadow-lg flex flex-col
           transition-all duration-300 ease-in-out
-          ${isCollapsed ? 'lg:w-20' : 'lg:w-64'}
-          ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          ${isCollapsed ? "lg:w-20" : "lg:w-64"}
+          ${
+            isMobileOpen
+              ? "translate-x-0"
+              : "-translate-x-full lg:translate-x-0"
+          }
           w-64
         `}
       >
         {/* Header with Toggle Button */}
         <div className="p-4 border-b flex items-center justify-between">
-          <div className={`overflow-hidden transition-all duration-300 ${isCollapsed ? 'lg:w-0 lg:opacity-0' : 'w-full opacity-100'}`}>
+          <div
+            className={`overflow-hidden transition-all duration-300 ${
+              isCollapsed ? "lg:w-0 lg:opacity-0" : "w-full opacity-100"
+            }`}
+          >
             <h2 className="font-bold text-xl text-gray-800">Dashboard</h2>
             <p className="text-sm text-gray-600 mt-1 truncate">{user?.email}</p>
           </div>
-          
+
           {/* Desktop Toggle Button */}
           <button
             onClick={toggleSidebar}
@@ -143,7 +157,9 @@ const [settingsOpen, setSettingsOpen] = useState(false);
             aria-label="Toggle sidebar"
           >
             <svg
-              className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`}
+              className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
+                isCollapsed ? "rotate-180" : ""
+              }`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -178,12 +194,12 @@ const [settingsOpen, setSettingsOpen] = useState(false);
             </svg>
           </button>
         </div>
-        
+
         {/* Navigation Links */}
         <nav className="flex-1 p-4 space-y-2">
-          <Link 
-            to="/dashboard" 
-            className={linkClass('/dashboard')}
+          <Link
+            to="/dashboard"
+            className={linkClass("/dashboard")}
             onClick={() => setIsMobileOpen(false)}
           >
             <svg
@@ -199,15 +215,20 @@ const [settingsOpen, setSettingsOpen] = useState(false);
                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
               />
             </svg>
-            <span className={`overflow-hidden transition-all duration-300 ${isCollapsed ? 'lg:w-0 lg:opacity-0' : 'w-full opacity-100'}`}>
+            <span
+              className={`overflow-hidden transition-all duration-300 ${
+                isCollapsed ? "lg:w-0 lg:opacity-0" : "w-full opacity-100"
+              }`}
+            >
               Home
             </span>
-          </Link> 
-          <Link 
-            to="/wallet" 
-            className={linkClass('/wallet')}
+          </Link>
+          <Link
+            to="/wallet"
+            className={linkClass("/wallet")}
             onClick={() => setIsMobileOpen(false)}
-          ><svg
+          >
+            <svg
               className="w-5 h-5 flex-shrink-0"
               fill="none"
               stroke="currentColor"
@@ -220,14 +241,20 @@ const [settingsOpen, setSettingsOpen] = useState(false);
                 d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
               />
             </svg>
-            <span className={`overflow-hidden transition-all duration-300 ${isCollapsed ? 'lg:w-0 lg:opacity-0' : 'w-full opacity-100'}`}>
+            <span
+              className={`overflow-hidden transition-all duration-300 ${
+                isCollapsed ? "lg:w-0 lg:opacity-0" : "w-full opacity-100"
+              }`}
+            >
               Wallet
             </span>
-          </Link> <Link 
-            to="/users" 
-            className={linkClass('/users')}
+          </Link>{" "}
+          <Link
+            to="/users"
+            className={linkClass("/users")}
             onClick={() => setIsMobileOpen(false)}
-          ><svg
+          >
+            <svg
               className="w-5 h-5 flex-shrink-0"
               fill="none"
               stroke="currentColor"
@@ -240,18 +267,13 @@ const [settingsOpen, setSettingsOpen] = useState(false);
                 d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
               />
             </svg>
-            <span className={`overflow-hidden transition-all duration-300 ${isCollapsed ? 'lg:w-0 lg:opacity-0' : 'w-full opacity-100'}`}>
+            <span
+              className={`overflow-hidden transition-all duration-300 ${
+                isCollapsed ? "lg:w-0 lg:opacity-0" : "w-full opacity-100"
+              }`}
+            >
               Manage Users
             </span>
-          </Link> 
-        </nav>
-
- 
-        
-        {/* Logout Button */}
-        <div className="p-4 border-t"> 
-          <Link to="/" className="text-blue-500 hover:underline">
-            Logout
           </Link>
           <div className="relative">
             <button
@@ -260,7 +282,12 @@ const [settingsOpen, setSettingsOpen] = useState(false);
               onMouseLeave={() => isCollapsed && setSettingsOpen(false)}
               className={`
                 w-full flex items-center gap-3 py-3 px-4 rounded-lg transition-all duration-200
-                ${(isActive('/api-keys') || location.pathname.startsWith('/settings')) ? 'bg-blue-500 text-white shadow-md' : 'text-gray-700 hover:bg-gray-100'}
+                ${
+                  isActive("/api-keys") ||
+                  location.pathname.startsWith("/settings")
+                    ? "bg-blue-500 text-white shadow-md"
+                    : "text-gray-700 hover:bg-gray-100"
+                }
               `}
             >
               <svg
@@ -282,11 +309,17 @@ const [settingsOpen, setSettingsOpen] = useState(false);
                   d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              <span className={`flex-1 text-left overflow-hidden transition-all duration-300 ${isCollapsed ? 'lg:w-0 lg:opacity-0' : 'w-full opacity-100'}`}>
+              <span
+                className={`flex-1 text-left overflow-hidden transition-all duration-300 ${
+                  isCollapsed ? "lg:w-0 lg:opacity-0" : "w-full opacity-100"
+                }`}
+              >
                 Settings
               </span>
               <svg
-                className={`w-4 h-4 flex-shrink-0 transition-transform duration-200 ${settingsOpen ? 'rotate-180' : ''} ${isCollapsed ? 'lg:hidden' : ''}`}
+                className={`w-4 h-4 flex-shrink-0 transition-transform duration-200 ${
+                  settingsOpen ? "rotate-180" : ""
+                } ${isCollapsed ? "lg:hidden" : ""}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -299,14 +332,23 @@ const [settingsOpen, setSettingsOpen] = useState(false);
                 />
               </svg>
             </button>
-            
+
             {/* Submenu - Shows below when expanded, shows as tooltip when collapsed */}
             <div
               className={`
                 transition-all duration-300
-                ${isCollapsed 
-                  ? `lg:absolute lg:left-full lg:top-0 lg:ml-2 lg:bg-white lg:rounded-lg lg:shadow-lg lg:border lg:border-gray-200 lg:min-w-[200px] lg:z-50 ${settingsOpen ? 'lg:opacity-100 lg:visible' : 'lg:opacity-0 lg:invisible'}` 
-                  : `overflow-hidden ${settingsOpen ? 'max-h-40 opacity-100 mt-1' : 'max-h-0 opacity-0'}`
+                ${
+                  isCollapsed
+                    ? `lg:absolute lg:left-full lg:top-0 lg:ml-2 lg:bg-white lg:rounded-lg lg:shadow-lg lg:border lg:border-gray-200 lg:min-w-[200px] lg:z-50 ${
+                        settingsOpen
+                          ? "lg:opacity-100 lg:visible"
+                          : "lg:opacity-0 lg:invisible"
+                      }`
+                    : `overflow-hidden ${
+                        settingsOpen
+                          ? "max-h-40 opacity-100 mt-1"
+                          : "max-h-0 opacity-0"
+                      }`
                 }
               `}
               onMouseEnter={() => isCollapsed && setSettingsOpen(true)}
@@ -316,8 +358,12 @@ const [settingsOpen, setSettingsOpen] = useState(false);
                 to="/api-keys"
                 className={`
                   flex items-center gap-3 py-2 px-4 rounded-lg transition-all duration-200
-                  ${isCollapsed ? '' : 'ml-7'}
-                  ${isActive('/api-keys') ? 'bg-blue-100 text-blue-700 font-medium' : 'text-gray-600 hover:bg-gray-50'}
+                  ${isCollapsed ? "" : "ml-7"}
+                  ${
+                    isActive("/api-keys")
+                      ? "bg-blue-100 text-blue-700 font-medium"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }
                 `}
                 onClick={() => {
                   setIsMobileOpen(false);
@@ -340,10 +386,27 @@ const [settingsOpen, setSettingsOpen] = useState(false);
                 <span className="text-sm">API Keys</span>
               </Link>
             </div>
-          </div> 
-          <button
+          </div>
+        </nav>
+
+        {/* Logout Button */}
+        <div className="p-4 border-t">
+          <Link
+            // to="/"
+            onClick={() => handleLogout()}
+            // className="text-blue-500 hover:underline"
+            className={`
+              w-full bg-red-500 text-white py-2 px-4 rounded-lg 
+              hover:bg-red-600 transition-all duration-200
+              flex items-center justify-center gap-2
+              shadow-md hover:shadow-lg
+            `}
+          >
+            Logout
+          </Link>
+          {/* <button
             onClick={() => {
-              logout();
+              handleLogout();
               setIsMobileOpen(false);
             }}
             className={`
@@ -366,10 +429,14 @@ const [settingsOpen, setSettingsOpen] = useState(false);
                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
               />
             </svg>
-            <span className={`overflow-hidden transition-all duration-300 ${isCollapsed ? 'lg:w-0 lg:opacity-0' : 'w-full opacity-100'}`}>
+            <span
+              className={`overflow-hidden transition-all duration-300 ${
+                isCollapsed ? "lg:w-0 lg:opacity-0" : "w-full opacity-100"
+              }`}
+            >
               Logout
             </span>
-          </button>
+          </button> */}
         </div>
       </aside>
     </>

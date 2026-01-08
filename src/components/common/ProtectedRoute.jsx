@@ -4,6 +4,8 @@ import { useAuth } from '../../context/AuthContext';
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
   
+  const getAccessToken = () => localStorage.getItem("accessToken"); 
+  
   // Show nothing while checking authentication
   if (loading) {
     return (
@@ -14,8 +16,8 @@ const ProtectedRoute = ({ children }) => {
   }
   
   // Redirect to login if not authenticated
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+  if (!getAccessToken() || getAccessToken() === '') {
+    return <Navigate to="/" replace />;
   }
   
   // Render the protected component
