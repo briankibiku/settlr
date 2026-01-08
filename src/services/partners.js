@@ -32,7 +32,6 @@ export const getTransfiBalance = async (currency = 'KES') => {
       date // This gets the date string separately
     } = response.data;
 
-    console.log('Dashboard Data Partner:', totalCollectionsAmount);
     
     return { 
         totalCollectionsAmount,

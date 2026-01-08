@@ -75,10 +75,10 @@ const [settingsOpen, setSettingsOpen] = useState(false);
   };
 
   const handleLogout = () => {
-    // localStorage.removeItem('accessToken');
     logout();
-    // navigate('/');
-    navigate("/", { replace: true });
+    // localStorage.removeItem('accessToken');
+    // localStorage.removeItem('refreshToken');
+    navigate("/", { replace: true }); 
   };
   
   const toggleMobileSidebar = () => {
@@ -392,7 +392,7 @@ const [settingsOpen, setSettingsOpen] = useState(false);
 
         {/* Logout Button */}
         <div className="p-4 border-t">
-          <Link
+          {/* <Link
             // to="/"
             onClick={() => handleLogout()}
             // className="text-blue-500 hover:underline"
@@ -404,12 +404,9 @@ const [settingsOpen, setSettingsOpen] = useState(false);
             `}
           >
             Logout
-          </Link>
-          {/* <button
-            onClick={() => {
-              handleLogout();
-              setIsMobileOpen(false);
-            }}
+          </Link> */}
+          <button
+            onClick={handleLogout}
             className={`
               w-full bg-red-500 text-white py-2 px-4 rounded-lg 
               hover:bg-red-600 transition-all duration-200
@@ -437,7 +434,7 @@ const [settingsOpen, setSettingsOpen] = useState(false);
             >
               Logout
             </span>
-          </button> */}
+          </button>
         </div>
       </aside>
     </>
