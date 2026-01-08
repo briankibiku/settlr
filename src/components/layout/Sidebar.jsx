@@ -76,8 +76,8 @@ const [settingsOpen, setSettingsOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
-    logout();
-    navigate('/');
+    logout(); 
+    navigate("/", { replace: true });
   };
   
   const toggleMobileSidebar = () => {
