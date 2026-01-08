@@ -75,8 +75,9 @@ const [settingsOpen, setSettingsOpen] = useState(false);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    logout(); 
+    // localStorage.removeItem('accessToken');
+    logout();
+    // navigate('/');
     navigate("/", { replace: true });
   };
   
