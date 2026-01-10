@@ -21,7 +21,8 @@ const Chat = () => {
   // Call the real API
   const analyzeCaseAPI = async (injuries) => {
     try {
-      const response = await fetch("http://localhost:8000/analyze-case", {
+      const response = await fetch("https://settlr-backend-bto2.onrender.com/analyze-case", {
+      // const response = await fetch("http://localhost:8000/analyze-case", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
