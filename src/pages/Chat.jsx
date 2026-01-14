@@ -608,7 +608,7 @@ const Chat = () => {
       response += `🔗 **Related Cases from Kenya Law Reports**\n\n`;
 
       // Show top 5 most relevant cases, filter out low scores
-      const topCases = similar_cases.filter((c) => c.score > 0.2).slice(0, 5);
+      const topCases = similar_cases.filter((c) => c.score > 0.25).slice(0, 5);
       // const topCases = similar_cases.slice(0, 8);
       // const topCases = similar_cases;
 
