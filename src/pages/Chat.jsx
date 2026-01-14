@@ -827,11 +827,7 @@ const Chat = () => {
                 {/* Example prompts */}
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto">
                   <button
-                    onClick={() =>
-                      setInputMessage(
-                        "Fractured femur and broken ribs from motorcycle accident"
-                      )
-                    }
+                    onClick={() => setInputMessage("broken femur")}
                     className="p-4 bg-white rounded-lg border-2 border-purple-200 hover:border-purple-400 transition-all text-left group"
                   >
                     <div className="flex items-start gap-3">
@@ -848,11 +844,7 @@ const Chat = () => {
                   </button>
 
                   <button
-                    onClick={() =>
-                      setInputMessage(
-                        "Head injury and spinal damage from car collision"
-                      )
-                    }
+                    onClick={() => setInputMessage("soft tissue injuries")}
                     className="p-4 bg-white rounded-lg border-2 border-blue-200 hover:border-blue-400 transition-all text-left group"
                   >
                     <div className="flex items-start gap-3">
